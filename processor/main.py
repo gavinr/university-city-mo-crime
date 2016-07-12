@@ -1,4 +1,5 @@
 import sqlite3
+from geo import findAddress
 from openpyxl import load_workbook
 from datetime import datetime
 
@@ -39,20 +40,24 @@ def isValidRow(row):
 			return True
 	return False
 
-def getInsertRow(year, month, crimeIndex, streetNumber, streetName, howMany):
+def getInsertRow(conn, year, month, crimeIndex, streetNumber, streetName, howMany):
 	# datetime:
 	dt = datetime.strptime(month + ' 1 ' + year, '%B %d %Y')
 
 	# address numbers
 	splitAddress = str(streetNumber).split("-")
 	streetNumber1 = splitAddress[0]
+	streetNumber1LatLon = findAddress(conn, streetNumber1 + " " + streetName, "University City", "MO", "63130")
+
 	streetNumber2 = None
+	streetNumber2LatLon = [None, None]
 	if(len(splitAddress) > 1):
 		streetNumber2 = splitAddress[1]
+		streetNumber2LatLon = findAddress(conn, streetNumber2 + " " + streetName, "University City", "MO", "63130")
 
 	retList = []
 	for i in list(xrange(howMany)):
-		retList.append((unix_time_millis(dt), crimeForIndex(crimeIndex), streetNumber1, streetNumber2, streetName))
+		retList.append((unix_time_millis(dt), crimeForIndex(crimeIndex), streetNumber1, streetNumber2, streetName, streetNumber1LatLon[0], streetNumber1LatLon[1], streetNumber2LatLon[0], streetNumber2LatLon[1]))
 	return retList
 
 def addWorkbookData(fn):
@@ -70,9 +75,8 @@ def addWorkbookData(fn):
 					for idx, cell in enumerate(row):
 						if(idx != 0 and idx != 1):
 							if (cell.value > 0):
-								listOfTuples = getInsertRow(currentYear, currentMonth, idx, row[0].value, row[1].value, cell.value)
-								print len(listOfTuples)
-								conn.executemany('INSERT INTO crimes VALUES (?,?,?,?,?,null,null,null,null,null)', listOfTuples)
+								listOfTuples = getInsertRow(conn, currentYear, currentMonth, idx, row[0].value, row[1].value, cell.value)
+								conn.executemany('INSERT INTO crimes VALUES (?,?,?,?,?,?,?,?,?,null)', listOfTuples)
 	conn.commit()
 	conn.close()
 
