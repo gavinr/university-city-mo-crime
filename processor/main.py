@@ -47,14 +47,14 @@ def getInsertRow(conn, year, month, crimeIndex, streetNumber, streetName, howMan
 	# address numbers
 	splitAddress = str(streetNumber).split("-")
 	streetNumber1 = splitAddress[0]
-	streetNumber1LatLon = findAddress(conn, streetNumber1 + " " + streetName, "University City", "MO", "63130")
+	streetNumber1LatLon = findAddress(conn, streetNumber1 + " " + streetName, "University City", "MO")
 
 	streetNumber2 = None
 	streetNumber2LatLon = [None, None]
 	distance = None
 	if(len(splitAddress) > 1):
 		streetNumber2 = splitAddress[1]
-		streetNumber2LatLon = findAddress(conn, streetNumber2 + " " + streetName, "University City", "MO", "63130")
+		streetNumber2LatLon = findAddress(conn, streetNumber2 + " " + streetName, "University City", "MO")
 		# distance:
 		streetNumber1LatLonTuple = (streetNumber1LatLon[0], streetNumber1LatLon[1])
 		streetNumber2LatLonTuple = (streetNumber2LatLon[0], streetNumber2LatLon[1])

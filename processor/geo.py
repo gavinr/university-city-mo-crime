@@ -1,7 +1,7 @@
 import geocoder
 import sqlite3
 
-def findAddress(conn, address, city, state, zip):
+def findAddress(conn, address, city, state):
 	# first look up in the cache
 	c = conn.cursor()
 	addressString = address + ", " + city + ", " + state
@@ -16,12 +16,7 @@ def findAddress(conn, address, city, state, zip):
 	else:
 		# no cache hit, do the geocode.
 		print('GEOCODING')
-		g = geocoder.tamu(
-			address,
-			city=city,
-			state=state,
-			zipcode=zip
-		)
-		conn.execute('INSERT INTO addressCache VALUES (?,?,?)', (addressString, g.json['lat'], g.json['lng']))
+		g = geocoder.arcgis(address + ", " + city + ", " + state)
+		conn.execute('INSERT INTO addressCache VALUES (?,?,?,?)', (addressString, g.json['lat'], g.json['lng'], g.json['score']))
 		conn.commit()
 		return [g.json['lat'], g.json['lng']]
