@@ -8,7 +8,7 @@ Crime info from University City, MO. Original data is [posted in XLSX files](htt
 # The Data
 
 * Download: [SQLiteDB](https://github.com/gavinr/university-city-mo-crime/raw/master/data.sqlite) or [CSV](https://github.com/gavinr/university-city-mo-crime/blob/master/data.csv)
-* Browse Data: [Browse the SQLite DB](http://inloop.github.io/sqlite-viewer/?url=https://cdn.rawgit.com/gavinr/university-city-mo-crime/master/data.sqlite) (2015 data only)
+* Browse Data: [Browse the SQLite DB](http://inloop.github.io/sqlite-viewer/?url=https://cdn.rawgit.com/gavinr/university-city-mo-crime/master/data.sqlite) (2015 and 2016 data, for now)
 * Maps: (*coming soon!*)
 
 # Developing
