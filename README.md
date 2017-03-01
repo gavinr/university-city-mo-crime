@@ -13,6 +13,7 @@ Crime info from University City, MO. Original data is [posted in XLSX files](htt
 
 # Developing
 
+* `pip install geopy`
 * `pip install geocoder`
 * `pip install sqlite3`
 * `pip install openpyxl`

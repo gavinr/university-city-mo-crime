@@ -5,15 +5,32 @@ from datetime import datetime
 from geopy.distance import vincenty
 
 
-# constants
-currentYear = '2015'
-months = ['january','february','march','april','may','june','july','august','september','october','november','december']
-
-
+# constants - to run in future years, first save the files in the parent
+# folder "original_data/year" in the correct file name formats (see end
+# of file for name formats - just keep consistent from year to year and
+# you'll be ok)
+currentYear = '2016'
+months = [
+    'january',
+    'february',
+    'march',
+    'april',
+    'may',
+    'june',
+    'july',
+    'august',
+    'september',
+    'october',
+    'november',
+    'december'
+]
 
 epoch = datetime.utcfromtimestamp(0)
+
+
 def unix_time_millis(dt):
     return (dt - epoch).total_seconds()
+
 
 def crimeForIndex(crimeIndex):
 	if(crimeIndex == 2):
@@ -32,6 +49,7 @@ def crimeForIndex(crimeIndex):
 		return 'ROBBERY'
 	elif(crimeIndex == 9):
 		return 'RAPE'
+
 
 def isValidRow(row):
 	if(row[0].value is not None):
@@ -59,7 +77,7 @@ def getInsertRow(conn, year, month, crimeIndex, streetNumber, streetName, howMan
 		streetNumber1LatLonTuple = (streetNumber1LatLon[0], streetNumber1LatLon[1])
 		streetNumber2LatLonTuple = (streetNumber2LatLon[0], streetNumber2LatLon[1])
 		distance = vincenty(streetNumber1LatLonTuple, streetNumber2LatLonTuple).miles
-		
+
 
 	retList = []
 	for i in list(xrange(howMany)):
@@ -88,12 +106,12 @@ def addWorkbookData(fn):
 
 def main():
 	for file in [
-		'../original_data/2015/North Central Crime Report 2015.xlsx',
-		'../original_data/2015/North East Crime Report 2015.xlsx',
-		'../original_data/2015/North West Crime Report 2015.xlsx',
-		'../original_data/2015/South Central Crime Report 2015.xlsx',
-		'../original_data/2015/South East Crime Report 2015.xlsx',
-		'../original_data/2015/South West Crime Report 2015.xlsx'
+		'../original_data/{0}/North Central Crime Report {0}.xlsx'.format(currentYear),
+		'../original_data/{0}/North East Crime Report {0}.xlsx'.format(currentYear),
+		'../original_data/{0}/North West Crime Report {0}.xlsx'.format(currentYear),
+		'../original_data/{0}/South Central Crime Report {0}.xlsx'.format(currentYear),
+		'../original_data/{0}/South East Crime Report {0}.xlsx'.format(currentYear),
+		'../original_data/{0}/South West Crime Report {0}.xlsx'.format(currentYear)
 	]:
 		addWorkbookData(file)
 

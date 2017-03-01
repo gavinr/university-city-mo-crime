@@ -16,7 +16,7 @@ def findAddress(conn, address, city, state):
 	else:
 		# no cache hit, do the geocode.
 		print('GEOCODING')
-		g = geocoder.arcgis(address + ", " + city + ", " + state)
-		conn.execute('INSERT INTO addressCache VALUES (?,?,?,?)', (addressString, g.json['lat'], g.json['lng'], g.json['score']))
+		g = geocoder.google(address + ", " + city + ", " + state)
+		conn.execute('INSERT INTO addressCache VALUES (?,?,?,?)', (addressString, g.json['lat'], g.json['lng'], None))
 		conn.commit()
 		return [g.json['lat'], g.json['lng']]
