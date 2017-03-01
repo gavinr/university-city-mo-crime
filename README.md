@@ -18,6 +18,10 @@ Crime info from University City, MO. Original data is [posted in XLSX files](htt
 * `pip install sqlite3`
 * `pip install openpyxl`
 
+# About
+
+See my [blog post](https://gavinr.com/2017/02/27/open-data-university-city-mo/) for the story behind how this project got started.
+
 # Thanks
 
 - https://github.com/geopy/geopy
